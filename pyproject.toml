@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "fastapi-hw11"
+version = "0.1.0"
+description = ""
+authors = ["HelenNad <htkachenko88@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "^2.0.30"
+libgravatar = "^1.0.4"
+passlib = "^1.7.4"
+cloudinary = "^1.40.0"
+fastapi = "^0.111.0"
+alembic = "^1.13.1"
+psycopg2 = "^2.9.9"
+pydantic-settings = "^2.3.0"
+fastapi-limiter = "^0.1.6"
+python-jose = "^3.3.0"
+fastapi-mail = "^1.4.1"
+python-dotenv = "^1.0.1"
+uvicorn = {extras = ["standard"], version = "^0.30.1"}
+sphinx = "^7.3.7"
+pytest = "^8.2.1"
+
+
+[tool.poetry.group.dev.dependencies]
+sphinx = "^7.3.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+testpaths = [
+"tests"]
+pythonpath = "."
