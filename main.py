@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 import redis.asyncio as redis
 from pathlib import Path
 from fastapi import FastAPI, Depends, HTTPException, Request
@@ -34,8 +36,8 @@ app.include_router(contacts.router, prefix='/api')
 # uvicorn main:app --reload
 
 
-@app.on_event("startup")
-async def startup():
+@asynccontextmanager
+async def lifespan():
     r = await redis.Redis(host=config.REDIS_DOMAIN, port=config.REDIS_PORT, db=0, password=config.REDIS_PASSWORD)
     await FastAPILimiter.init(r)
 

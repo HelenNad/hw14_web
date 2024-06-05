@@ -8,7 +8,7 @@ from src.database.models import User
 from src.schemas import UserSchema
 
 
-async def get_user_by_email(email: str, db: Session = Depends(get_db)):
+async def get_user_by_email(email: str, db: Session):
     """
     The get_user_by_email function takes an email address and returns the user associated with that email.
     If no such user exists, it returns None.
@@ -18,10 +18,7 @@ async def get_user_by_email(email: str, db: Session = Depends(get_db)):
     :return: A user object
     :doc-author: Trelent
     """
-    stmt = select(User).filter_by(email=email)
-    user = db.execute(stmt)
-    user = user.scalar_one_or_none()
-    return user
+    return db.query(User).filter(User.email == email).first()
 
 
 async def create_user(body: UserSchema, db: Session = Depends(get_db)):
@@ -40,7 +37,10 @@ async def create_user(body: UserSchema, db: Session = Depends(get_db)):
     except Exception as err:
         print(err)
 
-    new_user = User(**body.model_dump(), avatar=avatar)
+    new_user = User(username=body.username,
+                    email=body.email,
+                    password=body.password,
+                    avatar=avatar)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)

@@ -39,7 +39,7 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
         result = await get_contact(contact_id=1, user=self.user, db=self.session)
         self.assertIsNone(result)
 
-    async def test_create_note(self):
+    async def test_create_contact(self):
         body = ContactBase(name="Test1",
                            fullname="Test1Big",
                            email="test@exampl.com",
